@@ -1,0 +1,2 @@
+debian/pacman.conf /etc/pacman.conf
+debian/mirrorlist  /etc/pacman.d/mirrorlist
