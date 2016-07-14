@@ -10,10 +10,10 @@ Build-Depends:
  bash (>= 4.1),
  libarchive-dev,
  libgpgme11-dev,
- gnupg,
  libcurl-dev,
  pkg-config,
- quilt
+ quilt,
+ python
 Standards-Version: 3.9.7
 Homepage: https://git.archlinux.org/pacman.git
 
