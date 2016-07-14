@@ -1,0 +1,12 @@
+arch-pacman (5.0.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Markus Schade <markus.schade@gmail.com>  Thu, 14 Jul 2016 14:48:10 +0200
+
+arch-pacman (5.0.0-1) unstable; urgency=low
+
+  * New upstream release
+  * dummy entry as lintian says we should close an ITP bug for a new package
+
+ -- Markus Schade <markus.schade@gmail.com>  Thu, 14 Jul 2016 14:48:10 +0200
