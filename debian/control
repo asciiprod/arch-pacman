@@ -12,7 +12,8 @@ Build-Depends:
  libgpgme11-dev,
  gnupg,
  libcurl-dev,
- pkg-config
+ pkg-config,
+ quilt
 Standards-Version: 3.9.7
 Homepage: https://git.archlinux.org/pacman.git
 
