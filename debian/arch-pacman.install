@@ -1,2 +1,3 @@
 debian/pacman.conf /etc/
 debian/mirrorlist  /etc/pacman.d/
+debian/keyrings/*  /usr/share/pacman/keyrings/
