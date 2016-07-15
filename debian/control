@@ -15,7 +15,6 @@ Build-Depends:
  quilt,
  python,
  gawk,
- util-linux,
  curl
 Standards-Version: 3.9.7
 Homepage: https://git.archlinux.org/pacman.git
