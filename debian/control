@@ -17,7 +17,8 @@ Build-Depends:
  gawk,
  curl,
  asciidoc,
- xsltproc
+ xsltproc,
+ docbook-xsl
 Standards-Version: 3.9.8
 Homepage: https://git.archlinux.org/pacman.git
 
