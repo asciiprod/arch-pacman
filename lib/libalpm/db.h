@@ -19,8 +19,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef _ALPM_DB_H
-#define _ALPM_DB_H
+#ifndef ALPM_DB_H
+#define ALPM_DB_H
 
 /* libarchive */
 #include <archive.h>
@@ -40,7 +40,7 @@ typedef enum _alpm_dbinfrq_t {
 	/* ALL should be info stored in the package or database */
 	INFRQ_ALL = INFRQ_BASE | INFRQ_DESC | INFRQ_FILES |
 		INFRQ_SCRIPTLET | INFRQ_DSIZE,
-	INFRQ_ERROR = (1 << 31)
+	INFRQ_ERROR = (1 << 30)
 } alpm_dbinfrq_t;
 
 /** Database status. Bitflags. */
@@ -107,6 +107,6 @@ alpm_pkg_t *_alpm_db_get_pkgfromcache(alpm_db_t *db, const char *target);
 alpm_list_t *_alpm_db_get_groupcache(alpm_db_t *db);
 alpm_group_t *_alpm_db_get_groupfromcache(alpm_db_t *db, const char *target);
 
-#endif /* _ALPM_DB_H */
+#endif /* ALPM_DB_H */
 
 /* vim: set noet: */

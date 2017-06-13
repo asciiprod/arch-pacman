@@ -617,7 +617,7 @@ remove() {
 rotate_db() {
 	dirname=${LOCKFILE%/*}
 
-	pushd $dirname >/dev/null
+	pushd "$dirname" >/dev/null
 
 	for repo in "db" "files"; do
 		filename=${REPO_DB_PREFIX}.${repo}.${REPO_DB_SUFFIX}
@@ -797,6 +797,17 @@ if (( SIGN || VERIFY )); then
 fi
 
 check_xdelta
+
+if (( VERIFY && ${#args[@]} == 1 )); then
+	for repo in "db" "files"; do
+		dbfile=${repodir}/$REPO_DB_PREFIX.$repo.$REPO_DB_SUFFIX
+
+		if [[ -f $dbfile ]]; then
+			verify_signature "$dbfile"
+		fi
+	done
+	exit 0
+fi
 
 prepare_repo_db
 

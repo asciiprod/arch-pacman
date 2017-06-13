@@ -450,7 +450,7 @@ Database Options[[QO]]
 	Mark a package as non-explicitly installed; in other words, set their install
 	reason to be installed as a dependency.
 
-*\--asexplicit<package>*::
+*\--asexplicit* <package>::
 	Mark a package as explicitly installed; in other words, set their install
 	reason to be explicitly installed. This is useful it you want to keep a
 	package installed even when it was initially installed as a dependency
@@ -558,6 +558,7 @@ See linkman:pacman.conf[5] for more details on configuring pacman using the
 
 See Also
 --------
-linkman:pacman.conf[5], linkman:makepkg[8], linkman:libalpm[3]
+linkman:alpm-hooks[5], linkman:libalpm[3], linkman:makepkg[8],
+linkman:pacman.conf[5]
 
 include::footer.txt[]
