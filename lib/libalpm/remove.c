@@ -180,7 +180,8 @@ static void remove_notify_needed_optdepends(alpm_handle_t *handle, alpm_list_t *
 			alpm_list_t *j;
 			for(j = optdeps; j; j = alpm_list_next(j)) {
 				alpm_depend_t *optdep = j->data;
-				if(alpm_pkg_find(lp, optdep->name)) {
+				char *optstring = alpm_dep_compute_string(optdep);
+				if(alpm_find_satisfier(lp, optstring)) {
 					alpm_event_optdep_removal_t event = {
 						.type = ALPM_EVENT_OPTDEP_REMOVAL,
 						.pkg = pkg,
@@ -188,6 +189,7 @@ static void remove_notify_needed_optdepends(alpm_handle_t *handle, alpm_list_t *
 					};
 					EVENT(handle, &event);
 				}
+				free(optstring);
 			}
 		}
 	}
@@ -438,8 +440,19 @@ static int unlink_file(alpm_handle_t *handle, alpm_pkg_t *oldpkg,
 {
 	struct stat buf;
 	char file[PATH_MAX];
+	int file_len;
 
-	snprintf(file, PATH_MAX, "%s%s", handle->root, fileobj->name);
+	file_len = snprintf(file, PATH_MAX, "%s%s", handle->root, fileobj->name);
+	if(file_len <= 0 || file_len >= PATH_MAX) {
+		/* 0 is a valid value from snprintf, but should be impossible here */
+		_alpm_log(handle, ALPM_LOG_DEBUG, "path too long to unlink %s%s\n",
+				handle->root, fileobj->name);
+		return -1;
+	} else if(file[file_len-1] == '/') {
+		/* trailing slashes cause errors and confusing messages if the user has
+		 * replaced a directory with a symlink */
+		file[--file_len] = '\0';
+	}
 
 	if(llstat(file, &buf)) {
 		_alpm_log(handle, ALPM_LOG_DEBUG, "file %s does not exist\n", file);

@@ -42,12 +42,12 @@ AC_PREREQ(2.62)
 #     pacman_version_micro += 1
 
 m4_define([lib_current], [10])
-m4_define([lib_revision], [1])
+m4_define([lib_revision], [2])
 m4_define([lib_age], [0])
 
 m4_define([pacman_version_major], [5])
 m4_define([pacman_version_minor], [0])
-m4_define([pacman_version_micro], [1])
+m4_define([pacman_version_micro], [2])
 m4_define([pacman_version],
           [pacman_version_major.pacman_version_minor.pacman_version_micro])
 
@@ -131,9 +131,9 @@ AC_ARG_WITH(gpgme,
 	[], [with_gpgme=check])
 
 # Help line for using libcurl
-AC_ARG_WITH(curl,
+AC_ARG_WITH(libcurl,
 	AS_HELP_STRING([--with-libcurl], [use libcurl for the internal downloader]),
-	[], [with_curl=check])
+	[], [with_libcurl=check])
 
 # Help line for documentation
 AC_ARG_ENABLE(doc,
@@ -308,7 +308,6 @@ PATH_MAX_DEFINED
 AC_FUNC_FORK
 AC_FUNC_GETMNTENT
 AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
-AC_FUNC_MALLOC
 AC_FUNC_MKTIME
 AC_FUNC_STRCOLL
 AC_CHECK_FUNCS([dup2 getcwd getmntinfo gettimeofday memmove memset \

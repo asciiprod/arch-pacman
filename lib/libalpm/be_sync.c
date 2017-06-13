@@ -231,8 +231,13 @@ int SYMEXPORT alpm_db_update(int force, alpm_db_t *db)
 
 		/* print server + filename into a buffer */
 		len = strlen(server) + strlen(db->treename) + strlen(dbext) + 2;
-		/* TODO fix leak syncpath and umask unset */
-		MALLOC(payload.fileurl, len, RET_ERR(handle, ALPM_ERR_MEMORY, -1));
+		MALLOC(payload.fileurl, len,
+			{
+				free(syncpath);
+				umask(oldmask);
+				RET_ERR(handle, ALPM_ERR_MEMORY, -1);
+			}
+		);
 		snprintf(payload.fileurl, len, "%s/%s%s", server, db->treename, dbext);
 		payload.handle = handle;
 		payload.force = force;
@@ -271,8 +276,13 @@ int SYMEXPORT alpm_db_update(int force, alpm_db_t *db)
 				len = strlen(server) + strlen(db->treename) + strlen(dbext) + 6;
 			}
 
-			/* TODO fix leak syncpath and umask unset */
-			MALLOC(payload.fileurl, len, RET_ERR(handle, ALPM_ERR_MEMORY, -1));
+			MALLOC(payload.fileurl, len,
+				{
+					free(syncpath);
+					umask(oldmask);
+					RET_ERR(handle, ALPM_ERR_MEMORY, -1);
+				}
+			);
 
 			if(final_db_url != NULL) {
 				snprintf(payload.fileurl, len, "%s.sig", final_db_url);
@@ -452,8 +462,9 @@ static size_t estimate_package_count(struct stat *st, struct archive *archive)
 static int sync_db_populate(alpm_db_t *db)
 {
 	const char *dbpath;
-	size_t est_count;
-	int count, fd;
+	size_t est_count, count;
+	int fd;
+	int ret = 0;
 	struct stat buf;
 	struct archive *archive;
 	struct archive_entry *entry;
@@ -487,7 +498,7 @@ static int sync_db_populate(alpm_db_t *db)
 	db->pkgcache = _alpm_pkghash_create(est_count);
 	if(db->pkgcache == NULL) {
 		db->handle->pm_errno = ALPM_ERR_MEMORY;
-		count = -1;
+		ret = -1;
 		goto cleanup;
 	}
 
@@ -509,10 +520,10 @@ static int sync_db_populate(alpm_db_t *db)
 	count = alpm_list_count(db->pkgcache->list);
 	if(count > 0) {
 		db->pkgcache->list = alpm_list_msort(db->pkgcache->list,
-				(size_t)count, _alpm_pkg_cmp);
+				count, _alpm_pkg_cmp);
 	}
 	_alpm_log(db->handle, ALPM_LOG_DEBUG,
-			"added %d packages to package cache for db '%s'\n",
+			"added %zu packages to package cache for db '%s'\n",
 			count, db->treename);
 
 cleanup:
@@ -520,7 +531,7 @@ cleanup:
 	if(fd >= 0) {
 		close(fd);
 	}
-	return count;
+	return ret;
 }
 
 /* This function validates %FILENAME%. filename must be between 3 and
