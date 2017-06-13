@@ -14,7 +14,6 @@ override_dh_auto_configure:
 	./autogen.sh
 	dh_auto_configure -- \
 	--disable-static \
-	--disable-doc \
 	--with-pkg-ext=.tar.xz \
 	--with-scriptlet=/bin/bash
 

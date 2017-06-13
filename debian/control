@@ -18,7 +18,7 @@ Build-Depends:
  curl,
  asciidoc,
  xsltproc
-Standards-Version: 3.9.7
+Standards-Version: 3.9.8
 Homepage: https://git.archlinux.org/pacman.git
 
 Package: arch-pacman
