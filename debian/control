@@ -18,7 +18,8 @@ Build-Depends:
  curl,
  asciidoc,
  xsltproc,
- docbook-xsl
+ docbook-xsl,
+ fakechroot
 Standards-Version: 3.9.8
 Homepage: https://git.archlinux.org/pacman.git
 
